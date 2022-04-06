@@ -22,14 +22,17 @@ sub open_cmd {
 
 	if (&bad_cmd($shell_cmd)) {
 		print "==> NOT RUNNING $shell_cmd (illegal characters)\n";
-	} elsif ($debug) {
-		$ret = open($handle, "$shell_cmd 2>/dev/null|");
-	} else {
-		$ret = open($handle, "$shell_cmd|");
+		return 1;
+	}  else {
+		if ($debug) {
+			$ret = open($handle, "$shell_cmd|");
+		} else {
+			$ret = open($handle, "$shell_cmd 2>/dev/null|");
+		}
+		&update_status("$shell_cmd");
+		print "==> running $shell_cmd\n" if $debug;
+		return $ret;
 	}
-	&update_status("$shell_cmd");
-	print "==> running $shell_cmd\n" if $debug;
-	return $ret;
 }
 
 1;

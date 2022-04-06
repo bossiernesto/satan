@@ -8,6 +8,7 @@
 #
 # NOTE - "" or 0 means false, in this config file
 #
+require 'config/paths.pl';
 
 # Where do we keep the data? This is just a default.
 $satan_data = "satan-data";
@@ -61,6 +62,7 @@ $long_timeout = 60;
 	'nfs-chk.satan', 120,
 	$heavy_tcp_scan, 120,
 	$heavy_udp_scan, 120,
+	$GET_TARGETS, 200,
 	);
 
 # what signal we send to nuke things when they timeout:

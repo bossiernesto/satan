@@ -12,12 +12,12 @@ print CLIENT <<EOF;
 <LINK REV="made" HREF="mailto:satan\@fish.com">
 </HEAD>
 <BODY>
-<H1><IMG SRC="$HTML_ROOT/images/satan.gif"> Host Table - $_severity </H1>
+<H1><IMG SRC=$HTML_ROOT/images/satan.gif> Host Table - $_severity </H1>
 <hr>
 
 <h2> 
 Tutorial: 
-<a href="$HTML_ROOT/tutorials/vulnerability/$_tutorial.html">$_severity</a>.
+<a href="$HTML_ROOT/tutorials/vulnerability/$_tutorial.html>$_severity</a>.
 </h2>
 
 <h3> 
@@ -39,8 +39,8 @@ do "$html_root/reporting/sort_hosts.pl";
 print CLIENT $@ if $@;
 
 print CLIENT <<EOF;
-<hr> <a href="$HTML_STARTPAGE"> Back to the SATAN start page </a> |
-<a href="analysis.pl.html"> Back to SATAN Reporting and Analysis </a>
+<hr> <a href=$HTML_STARTPAGE> Back to the SATAN start page </a> |
+<a href=analysis.pl> Back to SATAN Reporting and Analysis </a>
 </BODY>
 </HTML>
 EOF

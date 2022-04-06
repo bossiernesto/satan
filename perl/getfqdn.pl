@@ -5,7 +5,7 @@
 #
 # Stand-alone usage: getfqdn.pl hostname.
 #
-# version 1, Tue Mar 21 19:31:03 1995, last mod by wietse
+# version 2, Fri Apr 14 19:32:58 1995, last mod by wietse
 #
 require 'config/paths.pl';
 require 'config/satan.cf';
@@ -41,7 +41,9 @@ sub getfqdn {
 #
 # Some scaffolding code for stand-alone testing.
 #
-if ($running_under_satan == 0) {
+if ($running_under_satan) {
+	require 'perl/get_host.pl';
+} else {
 	$running_under_satan = 1;
 	require 'perl/get_host.pl';
 	$host = &getfqdn($ARGV[0]);

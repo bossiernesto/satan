@@ -10,7 +10,7 @@ print CLIENT <<EOF;
 <LINK REV="made" HREF="mailto:satan\@fish.com">
 </HEAD>
 <BODY>
-<H1><IMG SRC=$HTML_ROOT/images/satan.gif> Vulnerabilities - By Counts </H1>
+<H1><IMG SRC="$HTML_ROOT/images/satan.gif"> Vulnerabilities - By Counts </H1>
 <hr>
 <h3> Hosts by descending vulnerability counts. </h3>
 EOF
@@ -26,8 +26,8 @@ EOF
 	if @_hosts == 0;
 
 print CLIENT <<EOF;
-<hr> <a href=$HTML_STARTPAGE> Back to the SATAN start page </a> |
-<a href=analysis.pl> Back to SATAN Reporting and Analysis </a>
+<hr> <a href="$HTML_STARTPAGE"> Back to the SATAN start page </a> |
+<a href="analysis.pl.html"> Back to SATAN Reporting and Analysis </a>
 </BODY>
 </HTML>
 EOF

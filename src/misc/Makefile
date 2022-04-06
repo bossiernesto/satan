@@ -6,6 +6,7 @@ CFLAGS	= -O -I. $(XFLAGS)
 XFLAGS	= -DAUTH_GID_T=int
 RPCGEN	= rpcgen
 #LIBS	= -lsocket -lnsl
+#XOBJS	= environ.o
 
 all:	$(PROGS)
 
@@ -24,11 +25,11 @@ $(BIN)/rcmd: rcmd.c
 $(BIN)/sys_socket: sys_socket.c
 	$(CC) $(CFLAGS) -o $@ $?
 
-$(BIN)/safe_finger: safe_finger.c
-	$(CC) $(CFLAGS) -o $@ $?
+$(BIN)/safe_finger: safe_finger.c $(XOBJS)
+	$(CC) $(CFLAGS) -o $@ safe_finger.c $(XOBJS)
 
 rex.h rex_xdr.c: rex.x
-	$(RPCGEN) rex.x 2>/dev/null
+	$(RPCGEN) rex.x
 
 rex.o rex_xdr.o: rex.h
 

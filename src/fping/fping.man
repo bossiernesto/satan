@@ -15,28 +15,67 @@ fping \- send ICMP ECHO_REQUEST packets to network hosts
 is a 
 .MS ping 8
 like program which uses the Internet Control
-Message Protocol (ICMP) echo request to determine if a host is
-up. 
+Message Protocol (ICMP) echo request to determine if a target host is
+responding. 
 .B fping 
-is different from ping in that you can specify any
+differs from ping in that you can specify any
 number of hosts on the command line, or specify a file containing
-the lists of hosts to ping. Instead of trying one host until it
-timeouts or replies, 
+the lists of hosts to ping. Instead of sending to one host until it
+times out or replies, 
 .B fping 
 will send out a ping packet and move
-on to the next host in a round-robin fashion. If a host replies,
-it is noted and removed from the list of hosts to check. If a host
+on to the next host in a round-robin fashion. 
+.PP
+In the default mode, 
+if a host replies,
+it is noted and removed from the list of hosts to check; if a host
 does not respond within a certain time limit and/or retry limit it 
-will be considered unreachable. 
+is designated as unreachable.  
+.B fping 
+also supports sending a specified number of pings to a host, and
+looping indefinitely (as in 
+.B ping
+).
 .PP
 Unlike 
-.MS ping 8
+.B ping
 ,
 .B fping 
-is meant to be used in scripts and its output is easy to parse.
+is meant to be used in scripts, so its output is designed to be 
+easy to parse.
 .SH OPTIONS
 .IP \fB-a\fR 5
 Show systems that are alive.
+.IP \fB-A\fR 5
+Display targets by address rather than DNS name.
+.IP \fB-b\fIn\fR 5
+Number of bytes of ping data to send.  The minimum size (normally 12)
+allows room for the data that 
+.B fping 
+needs to do its work (sequence number, timestamp).  The reported
+received data size includes the IP header (normally 20 bytes) and ICMP
+header (8 bytes), so the minimum total size is 40 bytes.  Default is
+56, as in 
+.B ping.
+Maximum is the theoretical maximum IP datagram size (64K), though most
+systems limit this to a smaller, system-dependent number.
+.IP \fB-c\fR 5
+Number of request packets to send to each target.  In this mode, a
+line is displayed for each received response (this can suppressed with
+-q).  Also, statistics about responses for each host are displayed
+when all requests have been sent (or when interrupted).
+.IP \fB-C\fR 5
+Similar to -c, but the per-host statistics are displayed in a format
+designed for automated response-time statistics gathering.  For
+example:
+
+% fping -C 5 -q somehost
+
+somehost : 91.7 37.0 29.2 - 36.8
+
+shows the response time in milliseconds for each of the five requests,
+with the "-" indicating that no response was received to the fourth
+request.
 .IP \fB-d\fR 5
 Use DNS to lookup address of return ping packet. This allows you to give
 fping a list of IP addresses as input and print hostnames in the output.
@@ -44,8 +83,12 @@ fping a list of IP addresses as input and print hostnames in the output.
 Show elapsed (round-trip) time of packets
 .IP \fB-f\fR 5
 Read list of system from a file.
+.IP \fB-h\fR 5
+Print usage message.
 .IP \fB-i\fIn\fR 5
 The minimum amount of time (in milliseconds) between sending a ping packet to any host (default is 25).
+.IP \fB-n\fR 5
+Same as -d.
 .IP \fB-q\fR 5
 Quiet. Don't show per host results, just set final exit status.
 .IP \fB-r\fIn\fR 5

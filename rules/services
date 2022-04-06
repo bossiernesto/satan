@@ -39,7 +39,13 @@ $service eq "xdmcp"			XDM (X login)
 /telnet on port (\d+)/			Telnet on port $1
 /<title>/i && $service ne "http"	WWW (non-standard port)
 /0'QUIT'/ && $service ne "gopher"	Gopher (non-standard port)
+/ERROR :Closing Link:/			IRC
 /220.*ftp server/i && $service ne "ftp"	FTP (non-standard port)
+$service eq "tftp"			TFTP
+$service eq "snmp"			SNMP
+$service eq "snmp-trap"			SNMP Trap
+/OffendingCommand: QUIT/		PostScript Printer
+
 
 CLIENTS
 

@@ -8,10 +8,10 @@ print CLIENT <<EOF;
 <LINK REV="made" HREF="mailto:satan\@fish.com">
 </HEAD>
 <BODY>
-<H1><IMG SRC=$HTML_ROOT/images/satan.gif> Hosts - By Name </H1>
+<H1><IMG SRC="$HTML_ROOT/images/satan.gif"> Hosts - By Name </H1>
 <hr>
 
-<FORM METHOD=POST ACTION="satan_info_host_action.pl">
+<FORM METHOD=POST ACTION="satan_info_host_action.pl.html">
 
 <strong>Enter a host name (<I>host.domain</I> preferred):</strong>
 <h3>
@@ -22,8 +22,8 @@ print CLIENT <<EOF;
 
 </FORM>
 
-<hr> <a href=$HTML_STARTPAGE> Back to the SATAN start page </a> |
-<a href=analysis.pl> Back to SATAN Reporting and Analysis </a>
+<hr> <a href="$HTML_STARTPAGE"> Back to the SATAN start page </a> |
+<a href="analysis.pl.html"> Back to SATAN Reporting and Analysis </a>
 </BODY>
 </HTML>
 EOF

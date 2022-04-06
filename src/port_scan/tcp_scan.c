@@ -195,7 +195,8 @@ char   *why;
 {
     if (why)
 	remark(why);
-    error("usage: %s [-abuU] [-l load] [-w time] host ports...", progname);
+    error("usage: %s [-abuU] [-l load] [-s string] [-w time] host ports...",
+	  progname);
 }
 
 /* scan_ports - scan ranges of ports */

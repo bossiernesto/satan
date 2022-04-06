@@ -9,15 +9,20 @@ In order get things up and running,
 - You will need PERL 5.000 or better (perl5 alpha is NOT good enough),
   and a WWW browser (Netscape, Mosaic, or Lynx). SATAN looks a lot
   better on a color display. The FAQ gives hints for MONO screens.
+  perl can be found on ftp.netlabs.com.
 
 - When you collect or view data about hundreds of hosts you will need a
   machine with enough CPU power (sparc5, indy, or better) and memory
   (32 MB or better).
 
-- Run the "reconfig" script. It will patch some scripts with the
-  pathnames of your PERL 5 executable, and of your WWW browser.  If
-  SATAN does not find the WWW browser that you want to use, edit the
-  config/paths.pl file and change the line 
+- Run the "reconfig" script. 
+
+	./reconfig
+
+  It will patch some scripts with the pathnames of your PERL 5
+  executable, and of your WWW browser.  If the "reconfig" script
+  does not find the WWW browser that you want to use, edit the
+  config/paths.pl file and change the line
 
 	$MOSAIC="program_name";
 

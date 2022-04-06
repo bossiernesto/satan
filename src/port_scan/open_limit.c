@@ -11,8 +11,10 @@
 #include <sys/resource.h>
 
 /* 44BSD compatibility. */
-#ifdef RLIMIT_OFILE
-#define RLIMIT_NOFILE RLIMIT_OFILE
+#ifndef RLIMIT_NOFILE
+# ifdef RLIMIT_OFILE
+#  define RLIMIT_NOFILE RLIMIT_OFILE
+# endif
 #endif
 
 int     open_limit()
@@ -23,7 +25,7 @@ int     open_limit()
     getrlimit(RLIMIT_NOFILE, &rl);
     return (rl.rlim_cur);
 #else
-            return (getdtablesize());
+    return (getdtablesize());
 #endif
 }
 

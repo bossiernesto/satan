@@ -145,6 +145,30 @@ int     protocol;
     perrorexit("nfs-chk: bind privileged port");
 }
 
+/* non_reserved_port - allocate unprivileged port or bust */
+
+int     non_reserved_port(type, protocol)
+int     type;
+int     protocol;
+{
+    struct sockaddr_in sin;
+    int     sock;
+    int     len;
+
+    if ((sock = socket(AF_INET, type, protocol)) < 0)
+        perrorexit("nfs-chk: socket");
+    memset((char *) &sin, 0, sizeof(sin));
+    sin.sin_family = AF_INET;
+
+    if (bind(sock, (struct sockaddr *) & sin, sizeof(sin)) < 0)
+        perrorexit("nfs-chk: bind unprivileged port");
+    len = sizeof(sin);
+    if (getsockname(sock, (struct sockaddr *) & sin, &len) < 0)
+        perrorexit("nfs-chk: getsockname");
+    debug("Using unprivileged port %d\n", ntohs(sin.sin_port));
+    return (sock);
+}
+
 /* make_client - create client handle to talk to rpc server */
 
 CLIENT *make_client(addr, program, version, privileged)
@@ -157,13 +181,14 @@ int     privileged;
     int     sock;
     AUTH_GID_T nul = 0;
 
-#if 0
+#ifndef TIRPC
     debug("Trying to set up TCP client handle\n");
     addr->sin_port = 0;
     if (privileged) {
 	sock = reserved_port(SOCK_STREAM, IPPROTO_TCP);
     } else {
-	sock = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+	/* Solaris 2.4 clntudp_create() tries to bind to privileged port :-( */
+	sock = non_reserved_port(SOCK_STREAM, IPPROTO_TCP);
     }
     if (sock < 0)
 	perrorexit("nfs-chk: socket");
@@ -183,7 +208,8 @@ int     privileged;
     if (privileged) {
 	sock = reserved_port(SOCK_DGRAM, IPPROTO_UDP);
     } else {
-	sock = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+	/* Solaris 2.4 clntudp_create() tries to bind to privileged port :-( */
+	sock = non_reserved_port(SOCK_DGRAM, IPPROTO_UDP);
     }
     if (sock < 0)
 	perrorexit("nfs-chk: socket");
@@ -262,25 +288,65 @@ char   *path;
 
 /* show_mount_point - display mount point info */
 
-int     show_mount_point(path, mount_status, client)
+int     show_mount_point(path, handle, client)
 char   *path;
-fhstatus *mount_status;
+fhandle handle;
 CLIENT *client;
 {
     attrstat *attr_status;
 
-    if ((attr_status = nfsproc_getattr_2(mount_status->fhstatus_u.fhs_fhandle,
-					 client)) == 0) {
+    if ((attr_status = nfsproc_getattr_2(handle, client)) == 0) {
 	clnt_perror(client, path);
 	return (0);
     } else if (attr_status->status != NFS_OK) {
 	nfs_perror(attr_status->status, path);
 	return (0);
     } else {
+#ifdef PRINT_HANDLE
+	int     i;
+	for (i = 0; i < FHSIZE; i++)
+	    printf("%02x", handle[i] & 0377);
+	printf(" ");
+#endif
 	print_attributes(&(attr_status->attrstat_u.attributes), path);
 	return (1);
     }
 }
+
+/* access_parent_dir - see if directory parent is accessible */
+
+int access_parent_dir(path, handle, client)
+char   *path;
+fhandle handle;
+CLIENT *client;
+{
+    char    buf[BUFSIZ];
+    diropargs args;
+    diropres *res;
+    attrstat *status;
+    char   *slash;
+
+    args.name = "..";
+    memcpy(&args.dir, handle, NFS_FHSIZE);
+    if ((res = nfsproc_lookup_2(&args, client)) == 0 || res->status != NFS_OK)
+	return (0);
+    if (memcmp(&res->diropres_u.diropres.file, handle, NFS_FHSIZE) == 0)
+	return (0);
+    status = nfsproc_getattr_2(&res->diropres_u.diropres.file, client);
+    if (status == 0 || status->status != NFS_OK)
+	return (0);
+    strcpy(buf, path);
+    if ((slash = strrchr(buf, '/')) != 0) {
+	if (slash == buf)
+	    slash++;
+	*slash = 0;
+	print_attributes(&(status->attrstat_u.attributes), buf);
+	if (buf[1])
+	    access_parent_dir(buf, &res->diropres_u.diropres.file, client);
+    }
+    return (1);
+}
+
 
 /* examine_filesystem - examine exported file system */
 
@@ -301,8 +367,13 @@ groups  client_info;
 	debug("Trying to mount %s via portmapper\n", path);
 	mount_status = portmap_mount(path, &h->sin);
 	if (mount_status != 0 && mount_status->fhs_status == NFS_OK) {
-	    if (show_mount_point(path, mount_status, h->nfsd_clnt))
+	    if (show_mount_point(path, mount_status->fhstatus_u.fhs_fhandle,
+				 h->nfsd_clnt))
 		printf("Warning: host %s exports %s via portmapper\n",
+		       h->hostname, path);
+	    if (access_parent_dir(path, mount_status->fhstatus_u.fhs_fhandle,
+				  h->nfsd_clnt))
+		printf("Warning: host %s exports %s parent directory\n",
 		       h->hostname, path);
 	    debug("Unmounting: %s\n", path);
 	    mountproc_umnt_1(&path, h->mountd_clnt);
@@ -311,14 +382,20 @@ groups  client_info;
     debug("Trying to mount %s via mountd\n", path);
     mount_status = mountproc_mnt_1(&path, h->mountd_clnt);
     if (mount_status != 0 && mount_status->fhs_status == NFS_OK) {
-	if (show_mount_point(path, mount_status, h->nfsd_clnt))
+	if (show_mount_point(path, mount_status->fhstatus_u.fhs_fhandle,
+			     h->nfsd_clnt))
 	    printf("Mounted: %s via mount daemon\n", path);
+	if (access_parent_dir(path, mount_status->fhstatus_u.fhs_fhandle,
+			      h->nfsd_clnt))
+	    printf("Warning: host %s exports %s parent directory\n",
+		   h->hostname, path);
 	debug("Unmounting: %s\n", path);
 	mountproc_umnt_1(&path, h->mountd_clnt);
 
 	mount_status = mountproc_mnt_1(&path, h->umountd_clnt);
 	if (mount_status != 0 && mount_status->fhs_status == NFS_OK) {
-	    if (show_mount_point(path, mount_status, h->unfsd_clnt))
+	    if (show_mount_point(path, mount_status->fhstatus_u.fhs_fhandle,
+				 h->unfsd_clnt))
 		printf("Warning: host %s exports %s to unprivileged programs\n",
 		       h->hostname, path);
 	    debug("Unmounting: %s\n", path);

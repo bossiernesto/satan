@@ -6,6 +6,11 @@ sub fix_hostname {
     local ($host, $origin) = @_;
     local ($fqdn, $dot, $old, $frag, $n, $trial);
 
+    # Can't do much when there is no completion info.
+    if (($dot = index($origin, ".")) < $[) {
+        return(&get_host_name(&get_host_addr($host)));
+    }
+
     # First see if the name (or IP address) is in the DNS.
     if ($host =~ /\./ && ($frag = &get_host_name(&get_host_addr($host)))) {
 	$host = $frag;

@@ -1,6 +1,6 @@
 
         fping - A tool to quickly ping N number of hosts to determine
-        their reachability without flooding the network.
+        their reachability.
 
              Roland J. Schemers III - Stanford University
                    schemers@Slapshot.Stanford.EDU
@@ -17,7 +17,7 @@
       will be considered unreachable. 
 
 Site
-      Stanford University has a large TCP/IP network with over 12,000 
+      Stanford University has a large TCP/IP network with over 16,000 
       assigned IP addresses and over 100 IP subnets.
 
 Problem and Issues
@@ -32,15 +32,10 @@ Problem and Issues
       aren't being used, or are just behind the routers. Checking 2500
       hosts (99% of which are unreachable) via ping can take hours.
        
-Solution
-      
-       fping was written to solve the problem of pinging N number of hosts
-       in an efficient manner. By sending out pings in a round-robin fashion
-       and checking on responses as they come in at random, a large number of 
-       hosts can be checked at once. Checking 2500 hosts (5 packets per host, 
-       10 msec between ping packets) takes under 3 minutes. Also, using fping
-       to check 30 routers that are currently reachable takes about 420
-       milliseconds (elapsed real time).
+      fping was written to solve the problem of pinging N number of hosts
+      in an efficient manner. By sending out pings in a round-robin fashion
+      and checking on responses as they come in at random, a large number of 
+      hosts can be checked at once.
 
-       Unlike ping, fping is meant to be used in scripts and its
-       output is easy to parse.
+      Unlike ping, fping is meant to be used in scripts and its
+      output is easy to parse.

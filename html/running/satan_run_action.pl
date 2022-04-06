@@ -13,7 +13,7 @@ if ($primary_target eq "") {
 <LINK REV="made" HREF="mailto:satan\@fish.com">
 </HEAD>
 <BODY>
-<H1><IMG SRC=$HTML_ROOT/images/satan.gif> Error - Missing input </H1>
+<H1><IMG SRC="$HTML_ROOT/images/satan.gif"> Error - Missing input </H1>
 <hr>
 No primary host or network was specified.
 </BODY>
@@ -36,7 +36,7 @@ if ($primary_target !~ /^\d+\./) {
 <LINK REV="made" HREF="mailto:satan\@fish.com">
 </HEAD>
 <BODY>
-<H1><IMG SRC=$HTML_ROOT/images/satan.gif> Error - Unknown host</H1>
+<H1><IMG SRC="$HTML_ROOT/images/satan.gif"> Error - Unknown host</H1>
 <hr>
 Unable to look up host <TT> $primary_target </TT>
 </BODY>
@@ -58,7 +58,7 @@ print CLIENT <<EOF
 <LINK REV="made" HREF="mailto:satan\@fish.com">
 </HEAD>
 <BODY>
-<H1><IMG SRC=$HTML_ROOT/images/satan.gif> SATAN data collection</H1>
+<H1><IMG SRC="$HTML_ROOT/images/satan.gif"> SATAN data collection</H1>
 <hr>
 <B>Data collection in progress...</B>
 
@@ -77,13 +77,13 @@ print CLIENT <<EOF;
 <P>
 
 <B>Data collection completed ($_live_hosts host(s) visited).</B>
-<hr> <a href=$HTML_STARTPAGE> Back to the SATAN start page </a> |
-<a href=../reporting/analysis.pl>Continue with report and analysis</a>
+<hr> <a href="$HTML_STARTPAGE"> Back to the SATAN start page </a> |
+<a href="../reporting/analysis.pl.html">Continue with report and analysis</a>
 EOF
 
 if (&getfqdn($tmp_target)) {
 	print CLIENT <<EOF;
-| <a href="../reporting/satan_info_host.pl,$tmp_target,">
+| <a href="../reporting/satan_info_host.pl,$tmp_target.html">
 View primary target results</a>
 EOF
 }

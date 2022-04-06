@@ -11,7 +11,7 @@ print CLIENT <<EOF;
 <LINK REV="made" HREF="mailto:satan\@fish.com">
 </HEAD>
 <BODY>
-<H1><IMG SRC=$HTML_ROOT/images/satan.gif> Results - $_host </H1>
+<H1><IMG SRC="$HTML_ROOT/images/satan.gif"> Results - $_host </H1>
 <hr>
 <h3>General host information:</h3>
 <ul>
@@ -28,7 +28,7 @@ $_exists = 0;
 
 if (exists($hosttype{$_host})) {
 	print CLIENT <<EOF;
-	<li>Host type: <A HREF="satan_info_OStype.pl,$_type,">$hosttype{$_host}</A>
+	<li>Host type: <A HREF="satan_info_OStype.pl,$_type.html">$hosttype{$_host}</A>
 EOF
 	$_exists = 1;
 }
@@ -38,7 +38,7 @@ if (exists($server_info{$_host})) {
 		# Mask blanks and slashes
 		($_service = $_) =~ tr / \//?!/;
 		print CLIENT <<EOF;
-		<li> <A HREF="satan_info_servers.pl,$_service,"> $_ </A> server
+		<li> <A HREF="satan_info_servers.pl,$_service.html"> $_ </A> server
 EOF
 	}
 	$_exists = 1;
@@ -49,7 +49,7 @@ if (exists($client_info{$_host})) {
 		# Mask blanks and slashes
 		($_service = $_) =~ tr / \//?!/;
 		print CLIENT <<EOF;
-		<li> <A HREF="satan_info_clients.pl,$_service,"> $_ </A> client
+		<li> <A HREF="satan_info_clients.pl,$_service.html"> $_ </A> client
 EOF
 	}
 	$_exists = 1;
@@ -58,7 +58,7 @@ EOF
 if (exists($all_hosts{$_host})) {
 	($_subnet = $all_hosts{$_host}{IP}) =~ s/\.[^.]*$//;
 	print CLIENT <<EOF;
-	<li> Subnet <A HREF="satan_results_subnet.pl,$_subnet,"> $_subnet </A>
+	<li> Subnet <A HREF="satan_results_subnet.pl,$_subnet.html"> $_subnet </A>
 EOF
 	$_exists = 1;
 }
@@ -67,7 +67,7 @@ if (exists($total_trustee_count{$_host})) {
 	$_count = split(/\s+/, $total_trustee_names{$_host});
 	print CLIENT <<EOF;
 	<li> $_count
-	<A HREF="satan_results_trusting.pl,$_host,trustee_type,"> Trusting host(s) </a>
+	<A HREF="satan_results_trusting.pl,$_host,trustee_type.html"> Trusting host(s) </a>
 EOF
 	$_exists = 1;
 }
@@ -76,7 +76,7 @@ if (exists($total_trusted_count{$_host})) {
 	$_count = split(/\s+/, $total_trusted_names{$_host});
 	print CLIENT <<EOF;
 	<li> $_count
-	<A HREF="satan_results_trusted.pl,$_host,trusted_type,"> Trusted host(s) </a>
+	<A HREF="satan_results_trusted.pl,$_host,trusted_type.html"> Trusted host(s) </a>
 EOF
 	$_exists = 1;
 }
@@ -122,7 +122,7 @@ if ($_exists) {
 	print CLIENT <<EOF;
 	<h3>Actions:</h3>
 	<ul>
-	<li> <A HREF="$HTML_SERVER/running/satan_run_form.pl,$_host,">Scan this host</a>
+	<li> <A HREF="$HTML_SERVER/running/satan_run_form.pl,$_host.html">Scan this host</a>
 	</ul>
 EOF
 } else {
@@ -132,8 +132,8 @@ EOF
 }
 
 print CLIENT <<EOF;
-<hr> <a href=$HTML_STARTPAGE> Back to the SATAN start page </a> |
-<a href=analysis.pl> Back to SATAN Reporting and Analysis </a>
+<hr> <a href="$HTML_STARTPAGE"> Back to the SATAN start page </a> |
+<a href="analysis.pl.html"> Back to SATAN Reporting and Analysis </a>
 </BODY>
 </HTML>
 EOF

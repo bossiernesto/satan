@@ -242,7 +242,7 @@ local($targets_found);
 
 # Expand and then collect. Pass results through new_target() for
 # consistent handling of constraints and policies.
-&open_cmd (TARGETS, 120, "$GET_TARGETS $target");
+&open_cmd (TARGETS, $timeouts{$GET_TARGETS}, "$GET_TARGETS $target");
 while (<TARGETS>) {
 	chop;
 	next unless $_ = getfqdn($_);

@@ -14,16 +14,16 @@ print <<EOF
 <HR>
 <UL>
 <dt><IMG SRC="dots/blackdot.gif" ALT="*">
-	<A HREF="$HTML_SERVER/data/satan_data_form.pl"><strong> SATAN Data Management</strong></A>
+	<A HREF="$HTML_SERVER/data/satan_data_form.pl.html"><strong> SATAN Data Management</strong></A>
 <p>
 <dt><IMG SRC="dots/blackdot.gif" ALT="*">
-	<A HREF="$HTML_SERVER/running/satan_run_form.pl"><STRONG> SATAN Target selection</STRONG></A>
+	<A HREF="$HTML_SERVER/running/satan_run_form.pl.html"><STRONG> SATAN Target selection</STRONG></A>
 <p>
 <dt><IMG SRC="dots/blackdot.gif" ALT="*">
-	<A HREF="$HTML_SERVER/reporting/analysis.pl"><STRONG> SATAN Reporting & Data Analysis</STRONG></A>
+	<A HREF="$HTML_SERVER/reporting/analysis.pl.html"><STRONG> SATAN Reporting & Data Analysis</STRONG></A>
 <p>
 <dt><IMG SRC="dots/blackdot.gif" ALT="*">
-	<A HREF="$HTML_SERVER/admin/satan_cf_form.pl"><strong> SATAN Configuration Management</strong></A>
+	<A HREF="$HTML_SERVER/admin/satan_cf_form.pl.html"><strong> SATAN Configuration Management</strong></A>
 <p>
 <dt><IMG SRC="dots/blackdot.gif" ALT="*">
 	<A HREF="satan_documentation.html"><strong> SATAN Documentation</strong></A>
@@ -35,13 +35,13 @@ print <<EOF
 <UL>
 <p>
 <dt><IMG SRC="dots/reddot.gif" ALT="*">
-	<A HREF=ftp://ftp.win.tue.nl/pub/security/index.html><strong> Getting the Latest version of SATAN</strong></A>
+	<A HREF="ftp://ftp.win.tue.nl/pub/security/index.html"><strong> Getting the Latest version of SATAN</strong></A>
 <dt><IMG SRC="dots/pinkdot.gif" ALT="*">
-	<A HREF=name.html><strong> Couldn't you call it something other than "SATAN"?</strong></A>
+	<A HREF="name.html"><strong> Couldn't you call it something other than "SATAN"?</strong></A>
 <dt><IMG SRC="dots/blackdot.gif" ALT="*">
-	<A HREF=docs/artwork.html><strong> 'Bout the SATAN image</strong></A>
+	<A HREF="docs/artwork.html"><strong> 'Bout the SATAN image</strong></A>
 <dt><IMG SRC="dots/purpledot.gif" ALT="*">
-	<A HREF=docs/authors.html><strong> 'Bout the authors</strong></A>
+	<A HREF="docs/authors.html"><strong> 'Bout the authors</strong></A>
 <p>
 </UL>
 </BODY>

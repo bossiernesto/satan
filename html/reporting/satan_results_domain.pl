@@ -10,7 +10,7 @@ print CLIENT <<EOF;
 <LINK REV="made" HREF="mailto:satan\@fish.com">
 </HEAD>
 <BODY>
-<H1><IMG SRC=$HTML_ROOT/images/satan.gif> Host Table - Domain $_domain</h1>
+<H1><IMG SRC="$HTML_ROOT/images/satan.gif"> Host Table - Domain $_domain</h1>
 <hr>
 
 <h3> 
@@ -19,11 +19,11 @@ Vulnerability counts in parentheses.
 </h3>
 
 <H4> Sort hosts by:
-<A HREF="satan_results_domain.pl,$_domain,name,">name</a> |
-<A HREF="satan_results_domain.pl,$_domain,type,">system type</a> |
-<A HREF="satan_results_domain.pl,$_domain,subnet,">subnet</a> |
-<A HREF="satan_results_domain.pl,$_domain,severity,">problem count</a> |
-<A HREF="satan_results_domain.pl,$_domain,severity_type,">problem type</a>
+<A HREF="satan_results_domain.pl,$_domain,name.html">name</a> |
+<A HREF="satan_results_domain.pl,$_domain,type.html">system type</a> |
+<A HREF="satan_results_domain.pl,$_domain,subnet.html">subnet</a> |
+<A HREF="satan_results_domain.pl,$_domain,severity.html">problem count</a> |
+<A HREF="satan_results_domain.pl,$_domain,severity_type.html">problem type</a>
 </H4>
 EOF
 
@@ -32,8 +32,8 @@ do "$html_root/reporting/sort_hosts.pl";
 print CLIENT $@ if $@;
 
 print CLIENT <<EOF;
-<hr> <a href=$HTML_STARTPAGE> Back to the SATAN start page </a> |
-<a href=analysis.pl> Back to SATAN Reporting and Analysis </a>
+<hr> <a href="$HTML_STARTPAGE"> Back to the SATAN start page </a> |
+<a href="analysis.pl.html"> Back to SATAN Reporting and Analysis </a>
 </BODY>
 </HTML>
 EOF

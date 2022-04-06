@@ -22,7 +22,6 @@ char   *argv[];
     static struct bp_whoami_res bp_res;
     char   *domain;
     char   *strchr();
-    char   *clnt_sperrno();
     char   *me = argv[0];
     char   *client = argv[1];
     char   *server = argv[2];

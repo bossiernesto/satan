@@ -14,7 +14,7 @@ if ($satan_data eq "") {
 <LINK REV="made" HREF="mailto:satan\@fish.com">
 </HEAD>
 <BODY>
-<H1><IMG SRC=$HTML_ROOT/images/satan.gif> Error - Missing input </H1>
+<H1><IMG SRC="$HTML_ROOT/images/satan.gif"> Error - Missing input </H1>
 <hr>
 No data directory was specified.
 </BODY>
@@ -34,10 +34,10 @@ print CLIENT <<EOF;
 <LINK REV="made" HREF="mailto:satan\@fish.com">
 </HEAD>
 <BODY>
-<H1><IMG SRC=$HTML_ROOT/images/satan.gif> SATAN Configuration Management </H1>
+<H1><IMG SRC="$HTML_ROOT/images/satan.gif"> SATAN Configuration Management </H1>
 <hr>
 <B>Configuration file changed</B>
-<hr> <a href=$HTML_STARTPAGE> Back to the SATAN start page </a>
+<hr> <a href="$HTML_STARTPAGE"> Back to the SATAN start page </a>
 </BODY>
 </HTML>
 EOF

@@ -50,7 +50,7 @@ while (<CF>) {
 			}
 		}
 
-	print "CF: $_ ($old_variable, $old_value)\n";
+	print "CF: $_ ($old_variable, $old_value)\n" if $debug;
 	print CFN "$old_variable = $old_value;\n";
 	}
 
@@ -58,8 +58,8 @@ close(CF);
 close(CFN);
 
 # move the evidence to where it belongs... old to .old, new to .cf:
-system("mv $SATAN_CF $SATAN_CF.old");
-system("mv $SATAN_CF.new $SATAN_CF");
+rename "$SATAN_CF", "$SATAN_CF.old";
+rename "$SATAN_CF.new", "$SATAN_CF";
 
 }
 

@@ -12,7 +12,7 @@ $(PROG):$(OBJECTS)
 	$(CC) $(CFLAGS) -o $@ $(OBJECTS) $(LIBS)
 
 yp.h yp_clnt.c yp_xdr.c: yp.x
-	$(RPCGEN) $? 2>/dev/null
+	$(RPCGEN) $?
 
 clean:
 	rm -f $(PROG) *.o core $(MAKES)

@@ -68,7 +68,8 @@ sub process_facts {
 				&infer_facts($_);
 				if (($trusted =~ /([^@]+)$/) && ($1 ne "ANY")
 				    && ($1 !~ /^localhost\.?/i)) {
-					&new_target(&fix_hostname($1, $target),
+					&new_target(exists($all_hosts{$1}) ?
+						$1 : &fix_hostname($1, $target),
 						&get_proximity($target) + 1);
 				}
 			}

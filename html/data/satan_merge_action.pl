@@ -16,7 +16,7 @@ if ($_directory eq "") {
 <LINK REV="made" HREF="mailto:satan\@fish.com">
 </HEAD>
 <BODY>
-<H1><IMG SRC=$HTML_ROOT/images/satan.gif> Error - Missing input </H1>
+<H1><IMG SRC="$HTML_ROOT/images/satan.gif"> Error - Missing input </H1>
 <hr>
 No data base name was specified.
 </BODY>
@@ -41,7 +41,7 @@ print CLIENT <<EOF;
 <LINK REV="made" HREF="mailto:satan\@fish.com">
 </HEAD>
 <BODY>
-<H1><IMG SRC=$HTML_ROOT/images/satan.gif> SATAN Data Management</H1>
+<H1><IMG SRC="$HTML_ROOT/images/satan.gif"> SATAN Data Management</H1>
 <HR>
 EOF
 
@@ -55,8 +55,8 @@ EOF
 
 print CLIENT <<EOF;
 <strong>Data base selection completed successfully.</strong>
-<hr> <a href=$HTML_STARTPAGE> Back to the SATAN start page </a>
-| <a href=../reporting/analysis.pl>Continue with report and analysis</a>
+<hr> <a href="$HTML_STARTPAGE"> Back to the SATAN start page </a>
+| <a href="../reporting/analysis.pl.html">Continue with report and analysis</a>
 </BODY>
 </HTML>
 EOF

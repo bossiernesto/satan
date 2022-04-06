@@ -140,7 +140,7 @@ EOF
 		} else {
 			($_GROUP = $_group) =~ tr / \//?!/;
 			print CLIENT <<EOF;
-			<a href="$_sort_link,$_GROUP,">$_group</a>.
+			<a href="$_sort_link,$_GROUP.html">$_group</a>.
 EOF
 		}
 		print CLIENT <<EOF;
@@ -161,8 +161,8 @@ EOF
 			$_bad = "";
 		}
 		print CLIENT <<EOF;
-		<dt><IMG SRC=$HTML_ROOT/dots/$_dot.gif ALT="$_alt"> 
-		<a href="satan_info_host.pl,$_,"> $_</a> $_bad
+		<dt><IMG SRC="$HTML_ROOT/dots/$_dot.gif" ALT="$_alt"> 
+		<a href="satan_info_host.pl,$_.html"> $_</a> $_bad
 EOF
 	}
 	print CLIENT <<EOF;

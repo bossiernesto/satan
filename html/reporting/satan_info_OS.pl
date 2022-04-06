@@ -9,7 +9,7 @@ print CLIENT <<EOF;
 <LINK REV="made" HREF="mailto:satan\@fish.com">
 </HEAD>
 <BODY>
-<H1><IMG SRC=$HTML_ROOT/images/satan.gif> Host Tables - by System Type </H1>
+<H1><IMG SRC="$HTML_ROOT/images/satan.gif"> Host Tables - by System Type </H1>
 <hr>
 <h3>Number of hosts per system type (vulnerable/total).</h3>
 <ul>
@@ -25,8 +25,8 @@ for (sort keys %systypes_by_class) {
 	$_dot = $sysclass_severities{$_} ? "reddot" : "blackdot";
 	$_alt = $sysclass_severities{$_} ? "*" : "-";
 	print CLIENT <<EOF
-	<dt><IMG SRC=$HTML_ROOT/dots/$_dot.gif ALT="$_alt"> 
-	<a href="satan_info_OSclass.pl,$_class,"> $_</a>
+	<dt><IMG SRC="$HTML_ROOT/dots/$_dot.gif" ALT="$_alt"> 
+	<a href="satan_info_OSclass.pl,$_class.html"> $_</a>
 	($sysclass_severities{$_}/$sysclass_counts{$_})
 EOF
 	unless /other/;
@@ -38,8 +38,8 @@ if (sizeof(*hosttype) > 0) {
 	$_dot = $sysclass_severities{$_class} ? "reddot" : "blackdot";
 	$_alt = $sysclass_severities{$_class} ? "*" : "-";
 	print CLIENT <<EOF;
-	<dt><IMG SRC=$HTML_ROOT/dots/$_dot.gif ALT="$_alt">
-	<a href="satan_info_OSclass.pl,other,"> Other/unknown</a>
+	<dt><IMG SRC="$HTML_ROOT/dots/$_dot.gif" ALT="$_alt">
+	<a href="satan_info_OSclass.pl,other.html"> Other/unknown</a>
 	($sysclass_severities{$_class}/$sysclass_counts{$_class})
 	</ul>
 	<HL><strong>System types with a red dot next to them have a vulnerable host contained within.</strong>
@@ -52,8 +52,8 @@ EOF
 }
 
 print CLIENT <<EOF;
-<hr> <a href=$HTML_STARTPAGE> Back to the SATAN start page </a> |
-<a href=analysis.pl> Back to SATAN Reporting and Analysis </a>
+<hr> <a href="$HTML_STARTPAGE"> Back to the SATAN start page </a> |
+<a href="analysis.pl.html"> Back to SATAN Reporting and Analysis </a>
 </BODY>
 </HTML>
 EOF

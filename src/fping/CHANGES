@@ -1,3 +1,46 @@
+* Revision 2.0  1994/10/31 21:26:23 morgan
+
+  Substantial rewrite, including new features:
+
+    support some traditional ping features:
+      loop mode
+      specify size of data packets
+      specify how many pings to send
+      show per-response data
+      interpret ICMPs other than ICMP Echo response
+
+  also
+
+    rewrote main loop completely
+    make timings in tenths of milliseconds
+    do exponential backoff on retries
+    port to more systems
+    add some debugging stuff
+    do better checking on whether received ICMP is for us
+
+* Revision 1.24  1993/12/10  23:11:39  schemers
+
+  commented out seteuid(getuid()) since it isn't needed
+
+* Revision 1.23  1993/12/10  18:33:41  schemers
+
+  Took out the -f option for non-root users. This can be enabled by
+  defining ENABLE_F_OPTION before compiling. There is a call to
+  access before opening the file, but there is a race condition.
+  Reading from stdin is much safer.
+
+
+* Revision 1.22  1993/11/16  19:49:24  schemers
+
+  Took out setuid(getuid()) and used access() system call to
+  check for access to the file specified with "-f".
+ 
+* Revision 1.21  1993/07/20  18:08:19  schemers
+
+  commented out the test to make sure the ping packet came from the
+  same IP address as the one we sent to. This could cause problems on
+  multi-homed hosts.
+
 * Revision 1.20  1993/02/23  00:16:38  schemers
 
 fixed syntax error (should have compiled before checking in...)

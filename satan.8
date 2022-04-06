@@ -25,9 +25,9 @@ When
 .I primary_target(s)
 are specified on the command line,
 .B SATAN
-collects data from the named hosts, and, possibly, from hosts that it
-discovers while probing a primary host. A primary target can be a host
-name, a host address, or a network number. In the latter case,
+collects data from the named primary hosts, and, possibly, from hosts
+that it discovers while probing a primary host. A primary target can be
+a host name, a host address, or a network number. In the latter case,
 .B SATAN
 collects data from each host in the named network.
 .PP
@@ -46,8 +46,8 @@ etc.  in the HTML user interface.
 Options:
 .IP -a
 Attack level (0=light, 1=normal, 2=heavy). At level 0,
-.B
-SATAN collects information about
+.B SATAN 
+collects information about
 .I RPC
 services and from the
 .I DNS.

@@ -24,7 +24,7 @@ The SATAN kernel consists of the following main parts:
 
 <dl>
 
-<p><dt><a href="#crypto-ignition>Magic cookie generator</a><dd> Each
+<p><dt><a href="#crypto-ignition">Magic cookie generator</a><dd> Each
 time SATAN is started up in interactive mode, the magic cookie generator
 generates a pseudorandom string that the HTML browser must send to the
 SATAN custom http server as part of all commands.
@@ -81,7 +81,7 @@ the HTML browser:
 typical httpd daemon, sufficient to support all activities that SATAN
 can perform.
 
-<p><li>Generate a (hopefully "good") 32 byte cryptographic magic cookie for
+<p><li>Generate a (hopefully "good") 128-bit cryptographic magic cookie for
 the upcoming SATAN run.  SATAN runs several system utilities in
 parallel and compresses their quasi-random output with the MD5 hashing
 function.  The HTML browser must specify this magic cookie as part of

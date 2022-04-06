@@ -8,7 +8,7 @@ print CLIENT <<EOF;
 <LINK REV="made" HREF="mailto:satan\@fish.com">
 </HEAD>
 <BODY>
-<H1><IMG SRC=$HTML_ROOT/images/satan.gif> Host Tables - by Internet Domain </H1>
+<H1><IMG SRC="$HTML_ROOT/images/satan.gif"> Host Tables - by Internet Domain </H1>
 <hr>
 <h3>Number of hosts per internet domain (vulnerable/total).</h3>
 <strong>Domains with a red dot next to them have a vulnerable host contained within.</strong>
@@ -22,8 +22,8 @@ for (sort keys %all_domains) {
 	$_dot = $domain_severities{$_} ? "reddot" : "blackdot";
 	$_alt = $domain_severities{$_} ? "*" : "-";
 	print CLIENT <<EOF;
-	<dt><IMG SRC=$HTML_ROOT/dots/$_dot.gif ALT="$_alt"> 
-	<a href="satan_results_domain.pl,$_,"> $_</a>
+	<dt><IMG SRC="$HTML_ROOT/dots/$_dot.gif" ALT="$_alt"> 
+	<a href="satan_results_domain.pl,$_.html"> $_</a>
 	($domain_severities{$_}/$domain_count{$_})
 EOF
 }
@@ -40,8 +40,8 @@ EOF
 
 print CLIENT <<EOF;
 </ul>
-<hr> <a href=$HTML_STARTPAGE> Back to the SATAN start page </a> |
-<a href=analysis.pl> Back to SATAN Reporting and Analysis </a>
+<hr> <a href="$HTML_STARTPAGE"> Back to the SATAN start page </a> |
+<a href="analysis.pl.html"> Back to SATAN Reporting and Analysis </a>
 </BODY>
 </HTML>
 EOF

@@ -136,7 +136,7 @@ EOF
 				$_last_txt = $text;
 				print CLIENT <<EOF;
 			<li> 
-			<a href="satan_info_host.pl,$_tmp,">$_tmp</a> 
+			<a href="satan_info_host.pl,$_tmp.html">$_tmp</a> 
 			<a href="$HTML_ROOT/tutorials/vulnerability/$_tutorial.html">($text)</a>
 EOF
 				}
@@ -153,8 +153,8 @@ EOF
 	}
 
         print CLIENT <<EOF;
-<hr> <a href=$HTML_STARTPAGE> Back to the SATAN start page </a> |
-<a href=analysis.pl> Back to SATAN Reporting and Analysis </a>
+<hr> <a href="$HTML_STARTPAGE"> Back to the SATAN start page </a> |
+<a href="analysis.pl.html"> Back to SATAN Reporting and Analysis </a>
 </BODY>
 </HTML>
 EOF

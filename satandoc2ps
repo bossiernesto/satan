@@ -1,0 +1,16 @@
+#!/bin/sh
+#
+# version 1, Wed Nov 29 20:51:32 1995, last mod by wietse
+#
+
+# satandoc2ps - save .html files as postscript, output in /tmp
+
+pwd=`pwd`
+
+for i in `find . -name '*.html' -print`
+do
+	netscape -remote "openURL(file://localhost`pwd`/$i)"
+	dest=/tmp/`basename $i .html`.ps
+	rm -f $dest
+	netscape -remote "saveas($dest, PostScript)"
+done

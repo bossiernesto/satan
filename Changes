@@ -1,12 +1,67 @@
+- get_targets now has a configurable timeout in config/satan.cf.
+- Documentation fix: our magic cookies are 128 bits, not 32 bytes.
+- Replaced fping by version 2.0, since the older fping would not work
+  through some (screend) packet filters.
+- Added COPYRIGHT file at root directory. The copyright was buried too
+  deep in the documentation and people had trouble finding it.
+- Dropped in a rule to recognize IRC servers (rules/services).
+- Added heuristics for CISCO router recognition (rules/hosttype).
+- Now shows TFTP and SNMP in service reports (rules/services).
+- Avoids hostname lookup when the host is already in %all_hosts. This
+  speeds up the loading of existing data.
+
+1.1.3
+
+- 14th vulnerability page for NFS servers that export parent directories.
+- Configuration management: shut up some debugging output and got rid of some
+  system() calls.
+- Work around some SYSV implementations that won't listen() on unbound ports.
+- The ~ftp writability test no longer uploads a copy of the /etc/group file.
+- reconfig determines the paths of netstat and ps, for improved robustness.
+- Simple heuristic to detect if the browser is actually a wrapper that puts
+  the real thing into the background.
+- get_targets now ignores the "fping" exit status, there were too many of them.
+- reconfig looks in /usr/X11R6/bin.
+- reconfig knows about the Chimera browser.
+- The HTML engine now talks via the "localhost" interface, to avoid problems
+  with multi-homed hosts that aren't properly registered in the DNS (except
+  when the lynx browser is being used).
+- All dynamically generated URLs now end in .html; all HTML values are now
+  protected by quotes.
+- More system types and cleaned up `how-to' Makefile embedded instructions.
+- The HTML engine did not handle %HEX sequences in URL strings.
+- Ripped out the garbage at the beginning of the reconfig script, because some
+  shells would silently choke on it.
+- Documented "satan [options] [target(s)]" in the user interface HTML page.
+- Fixed a clnt_sperrno() prototype conflict with Unixware.
+- Surprise: Solaris 2.x clntudp_create() binds to a privileged port when given
+  an unbound socket. We work around it.
+- The HTML engine now looks if "reconfig" found a web browser before trying
+  to run it.
+
+1.1.2
+
+- Released 1.1.2 satan_doc, because the sample database still has a lot of
+  educational value, and to clobber old satan_doc mirrors.
+- fixed a missing return assignment in shell.pl
+- Separate sysv4 Makefile entries: one for systems with rpcgen, one for
+  systems without.
+- All perl-script pseudolinks now end in .html, to avoid mime type confusion.
+  The .html suffix is stripped off before the URL is subjected to processing.
+- Some *.satan scripts barfed because getfqn.pl did not include get_host.pl.
+- Avoid netscape problems due to // between magic cookie and perl script names.
+- Makefile did have ultrix4 support but forgot to inform the user.
+
 1.1.1
 
 - URL filter was too strict, would reject names with () in them.
 
 1.1
 
+- deleted satan_doc archive (based on pre-1.0 code)
 - bundled in ctime.pl and getopts.pl from the perllib.
 - trouble shooting docs now integrated with FAQ, and a full week of feedback
-  processed into FAQ and troubkle entries.
+  processed into FAQ and trouble entries.
 - added a 13th vulnerability page. Irony has it that SATAN is the subject.
   Surprise: CERT/CC posts advisory *before* a software update is available.
 - SATAN now detects that HTML clients reveal parent URL information.

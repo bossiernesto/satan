@@ -26,11 +26,11 @@ print CLIENT <<EOF
 </HEAD>
 <BODY>
 
-<H1><IMG SRC=$HTML_ROOT/images/satan.gif> SATAN target selection</H1>
+<H1><IMG SRC="$HTML_ROOT/images/satan.gif"> SATAN target selection</H1>
 
 <hr>
 
-<FORM METHOD=POST ACTION="satan_run_action.pl">
+<FORM METHOD=POST ACTION="satan_run_action.pl.html">
 
 <h3> Primary target selection </h3>
 

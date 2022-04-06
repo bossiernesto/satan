@@ -18,8 +18,7 @@
 # The hosttype field is an expression that evaluates to a host type;
 # when it is absent, the value $1 is taken.
 #
-#
-# version 1, Sun Mar 26 18:39:56 1995, last mod by zen
+# version 2, Sat Feb 24 17:18:25 1996, last mod by wietse
 #
 
 #
@@ -144,9 +143,34 @@ CLASS OSF
 /OSF\/([.0-9]+)/						"OSF $1"
 
 #
+# DIAB DATA AB
+#
+# The first line is from the older version of the TCP/IP
+# communications stack while the second is from the newer.
+# (The identification may be improved).
+# The later version is only valid with version DNIX 5.3, while the
+# older is valid with both 5.2 and 5.3.
+#
+# 220 Diab Data AB FTP server (RFC 959) on hostname version R1.42
+# 220 Diab Data AB FTP server (RFC 959) on hostname version R2.05 ready.
+#
+# (Information about DIAB provided by nils@bod.fdata.se)
+#
+CLASS DIAB DNIX
+/(Diab Data AB)/						"Diab DNIX 5.x"
+
+#
+# EMX Softswitch mail gateway
+#
+# 220 HOSTNAME.DOMAIN EMX 1.2 ready
+#
+/(EMX [.0-9]+)/
+
+#
 # Some of these still need some refinement.
 #
 CLASS other
+/User Access Verification/					"CISCO"
 /(Macintosh|ConvexOS)/
 /(Windows NT|OS\/2)/
 /VersaTerm/							"Macintosh"
@@ -157,3 +181,4 @@ CLASS other
 /\b(CMC)\b/
 /(Epoch|RTU) /
 /(IBM VM|IBM MVS)/
+/(Livingston PortMaster)/

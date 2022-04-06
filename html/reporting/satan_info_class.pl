@@ -8,7 +8,7 @@ print CLIENT <<EOF;
 <LINK REV="made" HREF="mailto:satan\@fish.com">
 </HEAD>
 <BODY>
-<H1><IMG SRC=$HTML_ROOT/images/satan.gif> Host Tables - by Class of Service </H1>
+<H1><IMG SRC="$HTML_ROOT/images/satan.gif"> Host Tables - by Class of Service </H1>
 <hr>
 EOF
 
@@ -23,13 +23,13 @@ if (sizeof(*servers) > 0) {
 	$_alt = $server_severities{$_} ? "*" : "-";
 	if ($server_counts{$_} > 0) {
 	    print CLIENT <<EOF;
-	    <dt><IMG SRC=$HTML_ROOT/dots/$_dot.gif ALT="$_alt"> 
-	    <a href="satan_info_servers.pl,$_service,"> $_</a>
+	    <dt><IMG SRC="$HTML_ROOT/dots/$_dot.gif" ALT="$_alt"> 
+	    <a href="satan_info_servers.pl,$_service.html"> $_</a>
 	    ($server_severities{$_}/$server_counts{$_}) 
 EOF
 #	} else {
 #	    print CLIENT <<EOF;
-#	    <dt><IMG SRC=$HTML_ROOT/dots/blackdot.gif ALT="-"> $_
+#	    <dt><IMG SRC="$HTML_ROOT/dots/blackdot.gif" ALT="-"> $_
 #EOF
 	}
     }
@@ -45,13 +45,13 @@ if (sizeof(*clients) > 0) {
 	$_alt = $client_severities{$_} ? "*" : "-";
 	if ($client_counts{$_} > 0) {
 	    print CLIENT <<EOF;
-	    <dt><IMG SRC=$HTML_ROOT/dots/$_dot.gif ALT="$_alt"> 
-	    <a href="satan_info_clients.pl,$_service,"> $_</a>
+	    <dt><IMG SRC="$HTML_ROOT/dots/$_dot.gif" ALT="$_alt"> 
+	    <a href="satan_info_clients.pl,$_service.html"> $_</a>
 	    ($client_severities{$_}/$client_counts{$_})
 EOF
 #	} else {
 #	    print CLIENT <<EOF;
-#	    <dt><IMG SRC=$HTML_ROOT/dots/blackdot.gif ALT="-"> $_
+#	    <dt><IMG SRC="$HTML_ROOT/dots/blackdot.gif" ALT="-"> $_
 #EOF
 	}
     }
@@ -71,8 +71,8 @@ EOF
 }
 
 print CLIENT <<EOF
-<hr> <a href=$HTML_STARTPAGE> Back to the SATAN start page </a> |
-<a href=analysis.pl> Back to SATAN Reporting and Analysis </a>
+<hr> <a href="$HTML_STARTPAGE"> Back to the SATAN start page </a> |
+<a href="analysis.pl.html"> Back to SATAN Reporting and Analysis </a>
 </BODY>
 </HTML>
 EOF

@@ -20,7 +20,7 @@ print CLIENT <<EOF;
 <LINK REV="made" HREF="mailto:satan\@fish.com">
 </HEAD>
 <BODY>
-<H1><IMG SRC=$HTML_ROOT/images/satan.gif> Host Tables - By Subnet </H1>
+<H1><IMG SRC="$HTML_ROOT/images/satan.gif"> Host Tables - By Subnet </H1>
 <hr>
 <h3>$_subnets Subnets. Number of hosts per subnet (vulnerable/total). </h3>
 <strong>Subnets with a red dot next to them have a vulnerable host contained within.</strong>
@@ -31,16 +31,16 @@ EOF
 for $_net (sort sort_ip keys %all_subnets) {
     $dot = $subnet_severities{$_net} ? "red" : "black";
     print CLIENT <<EOF;
-	    <dt><IMG SRC=$HTML_ROOT/dots/$dot\dot.gif ALT="$dot">
-	    <a href="satan_results_subnet.pl,$_net,"> $_net </a> 
+	    <dt><IMG SRC="$HTML_ROOT/dots/$dot\dot.gif" ALT="$dot">
+	    <a href="satan_results_subnet.pl,$_net.html"> $_net </a> 
 	    ($subnet_severities{$_net}/$subnet_count{$_net})
 EOF
     }
 
 print CLIENT <<EOF;
 </ul>
-<hr> <a href=$HTML_STARTPAGE> Back to the SATAN start page </a> |
-<a href=analysis.pl> Back to SATAN Reporting and Analysis </a>
+<hr> <a href="$HTML_STARTPAGE"> Back to the SATAN start page </a> |
+<a href="analysis.pl.html"> Back to SATAN Reporting and Analysis </a>
 </BODY>
 </HTML>
 EOF

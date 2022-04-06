@@ -17,7 +17,7 @@ print <<EOF
 	<A HREF="tutorials/first_time/learning_to_use.html"><strong> Learning to use SATAN - a Quick Tutorial</strong></A>
 <p>
 <dt><IMG SRC="dots/blackdot.gif" ALT="*">
-	<A HREF="$HTML_SERVER/tutorials/vulnerability_tutorials.pl"><strong> Vulnerabilities - a Tutorial</strong></A>
+	<A HREF="$HTML_SERVER/tutorials/vulnerability_tutorials.pl.html"><strong> Vulnerabilities - a Tutorial</strong></A>
 <p>
 <dt><IMG SRC="dots/blackdot.gif" ALT="*">
 	<A HREF="docs/satan_reference.html"><strong>SATAN Reference - Architecture, Configuration and Operation</strong></A>
@@ -28,7 +28,7 @@ print <<EOF
 <dt><IMG SRC="dots/blackdot.gif" ALT="*">
 	<A HREF="docs/quotes.html"><strong> Quotable quotes about SATAN</strong></A>
 </UL>
-<hr> <a href=$HTML_STARTPAGE> Back to the SATAN start page </a>
+<hr> <a href="$HTML_STARTPAGE"> Back to the SATAN start page </a>
 </BODY>
 </HTML>
 EOF

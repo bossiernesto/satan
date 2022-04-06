@@ -24,43 +24,43 @@ print CLIENT <<EOF
 </HEAD>
 <BODY>
 
-<IMG SRC=$HTML_ROOT/images/satan.gif>
+<IMG SRC="$HTML_ROOT/images/satan.gif">
 <H1>SATAN Configuration Management</H1>
 <HR>
 
-<FORM METHOD=POST ACTION=satan_cf_action.pl>
+<FORM METHOD=POST ACTION="satan_cf_action.pl.html">
 
-<H2>Scanning levels and timeouts</H2>
+<H2>Databases, scanning levels and timeouts</H2>
 
 <STRONG>What directory should I store the data in?</STRONG>
 <DL compact>
-<DT><DD><INPUT SIZE=25 NAME=satan_data VALUE=$satan_data>
+<DT><DD><INPUT SIZE=25 NAME="satan_data" VALUE="$satan_data">
 Satan data directory
 </DL>
 <P>
 
 <STRONG>What probe level should I use?</STRONG>
 <DL compact>
-<DT><DD><INPUT TYPE="radio" NAME=attack_level VALUE=0 $cf_attack_level[0]>
+<DT><DD><INPUT TYPE="radio" NAME="attack_level" VALUE="0" $cf_attack_level[0]>
 Light
-<DT><DD><INPUT TYPE="radio" NAME=attack_level VALUE=1 $cf_attack_level[1]>
+<DT><DD><INPUT TYPE="radio" NAME="attack_level" VALUE="1" $cf_attack_level[1]>
 Normal
-<DT><DD><INPUT TYPE="radio" NAME=attack_level VALUE=2 $cf_attack_level[2]>
+<DT><DD><INPUT TYPE="radio" NAME="attack_level" VALUE="2" $cf_attack_level[2]>
 Heavy
 </DL>
 
 <P>
 <STRONG>What timeout values should I use?</STRONG>
 <DL compact>
-<DT><DD><INPUT SIZE=3 NAME=long_timeout VALUE=$long_timeout> Slow
-<DT><DD><INPUT SIZE=3 NAME=med_timeout VALUE=$med_timeout> Medium
-<DT><DD><INPUT SIZE=3 NAME=short_timeout VALUE=$short_timeout> Fast
+<DT><DD><INPUT SIZE=3 NAME="long_timeout" VALUE="$long_timeout"> Slow
+<DT><DD><INPUT SIZE=3 NAME="med_timeout" VALUE="$med_timeout"> Medium
+<DT><DD><INPUT SIZE=3 NAME="short_timeout" VALUE="$short_timeout"> Fast
 </DL>
 
 <P>
 <STRONG>What signal should I send to kill a tool process when it times out?</STRONG>
 <DL compact>
-<DT><DD><INPUT SIZE=3 NAME=timeout_kill VALUE=$timeout_kill>Kill signal
+<DT><DD><INPUT SIZE=3 NAME="timeout_kill" VALUE="$timeout_kill">Kill signal
 </DL>
 
 <P>
@@ -68,7 +68,7 @@ Heavy
 (Under no circumstances should this be higher than "2" unless you're
 POSITIVE you know what you're doing!)
 <DL compact>
-<DT><DD><INPUT SIZE=3 NAME=max_proximity_level VALUE=$max_proximity_level>
+<DT><DD><INPUT SIZE=3 NAME="max_proximity_level" VALUE="$max_proximity_level">
 Maximal proximity
 </DL>
 
@@ -76,36 +76,35 @@ Maximal proximity
 <STRONG>As I move out to less proximate hosts, how much should I drop
 the probe level?</STRONG>
 <DL compact>
-<DT><DD><INPUT SIZE=3 NAME=proximity_descent VALUE=$proximity_descent>
+<DT><DD><INPUT SIZE=3 NAME="proximity_descent" VALUE="$proximity_descent">
 Proximity descent
 </DL>
 
 <P>
 <STRONG>When I go below 0 probe level, should I:</STRONG>
 <DL compact>
-<DT><DD><INPUT TYPE="radio" NAME=sub_zero_proximity VALUE=0 $cf_sub_zero[0]>Stop
-<DT><DD><INPUT TYPE="radio" NAME=sub_zero_proximity VALUE=1 $cf_sub_zero[1]>Go on
+<DT><DD><INPUT TYPE="radio" NAME="sub_zero_proximity" VALUE="0" $cf_sub_zero[0]>Stop
+<DT><DD><INPUT TYPE="radio" NAME="sub_zero_proximity" VALUE="1" $cf_sub_zero[1]>Go on
 </DL>
 
 <P>
 <STRONG>Should I do subnet expansion; that is, should I probe just the
 target or its entire subnet?</STRONG>
 <DL compact>
-<DT><DD><INPUT TYPE="radio" NAME=attack_proximate_subnets VALUE=0
+<DT><DD><INPUT TYPE="radio" NAME="attack_proximate_subnets" VALUE="0"
 	$cf_attack_proximate[0]>Just the target
-<DT><DD><INPUT TYPE="radio" NAME=attack_proximate_subnets VALUE=1
+<DT><DD><INPUT TYPE="radio" NAME="attack_proximate_subnets" VALUE="1"
 	$cf_attack_proximate[1]>The entire subnet
 </DL>
 
 <P>
-<STRONG>Does $THIS_HOST appear in <i>rhosts, hosts.equiv</i> or
-<i>NFS exports</i> files of hosts being probed?
-</STRONG>
+<STRONG>Does <i>$THIS_HOST</i> appear in <i>rhosts, hosts.equiv</i>
+or <i>NFS exports</i> files of hosts being probed?  </STRONG>
 
 <DL compact>
-<DT><DD><INPUT TYPE="radio" NAME=untrusted_host VALUE=0 $cf_untrusted[0]>
+<DT><DD><INPUT TYPE="radio" NAME="untrusted_host" VALUE="0" $cf_untrusted[0]>
 You are running SATAN from a possibly trusted host
-<DT><DD><INPUT TYPE="radio" NAME=untrusted_host VALUE=1 $cf_untrusted[1]>
+<DT><DD><INPUT TYPE="radio" NAME="untrusted_host" VALUE="1" $cf_untrusted[1]>
 You are running SATAN from an untrusted host
 </DL>
 
@@ -125,7 +124,7 @@ for example:
 	192.9.9
 </PRE>
 <p>
-<INPUT SIZE=48 NAME=only_attack_these VALUE="$only_attack_these">
+<INPUT SIZE=48 NAME="only_attack_these" VALUE="$only_attack_these">
 <p>
 You can specify multiple shell-like patterns, separated by whitespace
 or commas, and you may mix networks and domains. A host will be
@@ -141,7 +140,7 @@ If you don't want to probe any military or governmental sites, you could use:
 	mil, gov
 </PRE>
 <p>
-<INPUT SIZE=48 NAME=dont_attack_these VALUE="$dont_attack_these">
+<INPUT SIZE=48 NAME="dont_attack_these" VALUE="$dont_attack_these">
 <p>
 You can specify multiple shell-like patterns, separated by whitespace
 or commas, and you may mix networks and domains. A host will be

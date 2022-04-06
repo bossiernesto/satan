@@ -9,7 +9,7 @@ if ($_query_host eq "") {
 <LINK REV="made" HREF="mailto:satan\@fish.com">
 </HEAD>
 <BODY>
-<H1><IMG SRC=$HTML_ROOT/images/satan.gif> Error - No Host </H1>
+<H1><IMG SRC="$HTML_ROOT/images/satan.gif"> Error - No Host </H1>
 <hr>
 <h2>Error: no host name specified. Try again.</h2>
 EOF
@@ -28,7 +28,7 @@ EOF
 <LINK REV="made" HREF="mailto:satan\@fish.com">
 </HEAD>
 <BODY>
-<H1><IMG SRC=$HTML_ROOT/images/satan.gif> Error - Unknown Host </H1>
+<H1><IMG SRC="$HTML_ROOT/images/satan.gif"> Error - Unknown Host </H1>
 <hr>
 <h2>Error: unknown host name specified: $_query_host. Try again.</h2>
 EOF

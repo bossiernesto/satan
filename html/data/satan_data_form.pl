@@ -12,7 +12,7 @@ print CLIENT <<EOF;
 <LINK REV="made" HREF="mailto:satan\@fish.com">
 </HEAD>
 <BODY>
-<H1><IMG SRC=$HTML_ROOT/images/satan.gif> SATAN Data Management </H1>
+<H1><IMG SRC="$HTML_ROOT/images/satan.gif"> SATAN Data Management </H1>
 <hr>
 
 <ul>
@@ -21,7 +21,7 @@ print CLIENT <<EOF;
 </ul>
 <hr>
 
-<FORM METHOD=POST ACTION="satan_open_action.pl">
+<FORM METHOD=POST ACTION="satan_open_action.pl.html">
 
 <a name="open-or-create"><h3>Open existing or create new SATAN data base</h3>
 
@@ -47,7 +47,7 @@ EOF
 for (@_results) {
 	if (-d "results/$_") {
 		print CLIENT <<EOF;
-		<li> <a href="satan_open_action.pl,$_,">$_</a>
+		<li> <a href="satan_open_action.pl,$_.html">$_</a>
 EOF
 	}
 }
@@ -57,7 +57,7 @@ print CLIENT <<EOF;
 
 <hr>
 
-<FORM METHOD=POST ACTION="satan_merge_action.pl">
+<FORM METHOD=POST ACTION="satan_merge_action.pl.html">
 
 <a name="merge"><h3>Merge with existing SATAN data base</h3>
 
@@ -84,14 +84,14 @@ EOF
 for (@_results) {
 	if (-d "results/$_") {
 		print CLIENT <<EOF;
-		<li> <a href="satan_merge_action.pl,$_,">$_</a>
+		<li> <a href="satan_merge_action.pl,$_.html">$_</a>
 EOF
 	}
 }
 
 print CLIENT <<EOF;
 </ul>
-<hr> <a href=$HTML_STARTPAGE> Back to the SATAN start page </a>
+<hr> <a href="$HTML_STARTPAGE"> Back to the SATAN start page </a>
 </BODY>
 </HTML>
 EOF

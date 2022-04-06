@@ -13,13 +13,13 @@ $(PROG):$(OBJECTS)
 	$(CC) $(CFLAGS) -o $@ $(OBJECTS) $(LIBS)
 
 nfs_prot.h nfs_prot_clnt.c nfs_prot_xdr.c: nfs_prot.x
-	$(RPCGEN) $? 2>/dev/null
+	$(RPCGEN) $?
 
 nfs_prot.x:
 	cp /usr/include/rpcsvc/nfs_prot.x .
 
 mount.h mount_clnt.c mount_xdr.c: mount.x
-	$(RPCGEN) $? 2>/dev/null
+	$(RPCGEN) $?
 
 mount.x:
 	cp /usr/include/rpcsvc/mount.x .

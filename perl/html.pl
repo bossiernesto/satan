@@ -1,6 +1,6 @@
 #!/usr/local/bin/perl5
 #
-# version 1, Thu Mar 23 21:53:31 1995, last mod by wietse
+# version 3, Sun Aug 13 21:19:26 1995, last mod by wietse
 #
 
 #
@@ -16,7 +16,7 @@
 #
 
 sub html {
-	local($helper, $wd, $host);
+	local($helper, $wd, $host, $start);
 
 	#
 	# Start the HTML server and generate the initial cookie for
@@ -31,23 +31,27 @@ sub html {
 
 	#
 	# These strings are used in, among others, PERL-to-HTML scripts.
+	# Try to speak HTML via the localhost interface (except with lynx).
 	#
 	$wd = `pwd`;
 	chop $wd;
 	$html_root = "$wd/html";
 	$start_page = "satan.html";
-	$THIS_HOST = &getfqdn(&hostname());
-	die "Can't find my own hostname: set \$dont_use_nslookup in $SATAN_CF\n"
-	    unless $THIS_HOST;
+	die <<EOF
+Can't get my fully-qualified name. Set \$dont_use_nslookup in $SATAN_CF 
+and try again.\n
+EOF
+	    unless $THIS_HOST = &getfqdn(&hostname());
+	$HTML_HOST = ($MOSAIC =~ /lynx/) ? $THIS_HOST : "localhost";
+	$html_client_addresses = find_all_addresses($HTML_HOST) ||
+	    die "Can't find all addresses for $HTML_HOST\n";
 	$HTML_ROOT = "file://localhost$html_root";
-	$HTML_SERVER = "http://$THIS_HOST:$html_port/$html_password/$html_root";
+	$HTML_SERVER = "http://$HTML_HOST:$html_port/$html_password$html_root";
 	$HTML_STARTPAGE = "$HTML_ROOT/$start_page";
 
 	#
 	# Some obscurity. The real security comes from magic cookies.
 	#
-	$html_client_addresses = find_all_addresses($THIS_HOST) ||
-		die "Unable to find all my network addresses\n";
 
 	for (<$html_root/*.pl>) {
 	    s/\.pl$//;
@@ -66,6 +70,7 @@ sub html {
 	# handles requests from that client. The parent process waits
 	# until the client exits and terminates the server.
 	#
+	die "Sorry, reconfig did not find any web browser\n" unless $MOSAIC;
 	print "Starting $MOSAIC...\n" if $debug;
 
 	if (($client = fork()) == 0) {
@@ -75,11 +80,11 @@ sub html {
 		exec($MOSAIC, "$HTML_STARTPAGE") 
 			|| die "cannot exec $MOSAIC: $!";
 	} 
+	if (($helper = fork()) == 0) {
+		alarm 3600;
+		&patience();
+	}
 	if (($server = fork()) == 0) {
-		if (($helper = fork()) == 0) {
-			alarm 3600;
-			&patience();
-		}
 		&init_satan_data();
 		&read_satan_data() unless defined($opt_i);
 		kill 'TERM',$helper;
@@ -95,9 +100,21 @@ sub html {
 	#
 	# Wait until the client terminates, then terminate the server.
 	#
+	$start = time();
 	close(SOCK);
 	waitpid($client, 0);
 	kill('TERM', $server);
+	kill('TERM', $helper);
+	warn <<EOF
+$MOSAIC terminated earlier than expected. Perhaps it is a wrapper
+or script that places the browser program into the background? When
+that is the case, edit config/paths.pl and change the line with
+
+	\$MOSAIC="/path/to/browser";
+
+so that it points to the browser program directly.
+EOF
+	if ($? == 0 && time() - $start < 5);
 	exit;
 }
 
@@ -111,7 +128,7 @@ sub make_password_seed {
 
 	die "Cannot find $MD5. Did you run a \"reconfig\" and \"make\"?\n"
 		unless -x "$MD5";
-	$command = "ps axl&ps -el&netstat -na&netstat -s&ls -lLRt /dev*&w";
+	$command = "$PS axl&ps -el&$NETSTAT -na&$NETSTAT -s&$LS -lLRt /dev&w";
 	open(SEED, "($command) 2>/dev/null | $MD5 |")
 		|| die "cannot run password command: $!";
 	($html_password = <SEED>) || die "password computation failed: $!";
@@ -129,6 +146,8 @@ sub start_html_server {
 	$sockaddr = 'S n a4 x8';
 	($junk, $junk, $proto) = getprotobyname('tcp');
 	socket(SOCK, &AF_INET, &SOCK_STREAM, $proto) || die "socket: $!";
+	# Some System V versions won't listen on unbound ports
+	bind(SOCK, pack($sockaddr, &AF_INET, 0, "\0\0\0\0")) || die "bind: $!";
 	listen(SOCK, 1) || die "listen: $!";
 	($junk, $html_port) = unpack($sockaddr, getsockname(SOCK));
 }
@@ -150,7 +169,7 @@ sub process_html_request {
 	local(%args);
 
 	#
-	# Parse the command and URL. Update the default file prefix.
+	# Parse the command and URL.
 	#
 	$request = <CLIENT>;
 	print $request if $debug;
@@ -159,9 +178,9 @@ sub process_html_request {
 		return;
 	}
 
+	($url = &html_unhex($url)) =~ s/\.html$//;
 	($junk, $magic, $script) = split(/\//, $url, 3);
-	($script, $html_script_args) = split(',', $script, 2);
-	($HTML_CWD = "file:$script") =~ s/\/[^\/]*$//;
+	($script, $html_script_args) = split(',', "/$script", 2);
 
 	#
 	# Make sure they gave us the right magic number.
@@ -177,10 +196,9 @@ sub process_html_request {
 	$peer = &get_peer_addr(CLIENT);
 	die "SATAN password from unauthorized client: $peer\n"
 		unless is_member_of($peer, $html_client_addresses);
-	die "Illegal URL: $url received from: $peer\n" 
-		if index($script, "..") >= $[
-		|| index($script, "$html_root/") != $[
-		|| $script !~ /\.pl$/;
+	die "Illegal script name: $script received from: $peer\n" 
+		if index($script ,"/../") >= $[
+		|| index($script, "$html_root/") != $[;
 
 	#
 	# Warn them when the browser leaks parent URLs to web servers.
@@ -204,12 +222,7 @@ sub process_html_request {
 			s/\s+$//;
 			s/^/\n/;
 			s/&/\n/g;
-			$html_post_attributes = '';
-			$* = 1;
-			for (split(/(%[0-9][0-9A-Z])/, $_)) {
-				$html_post_attributes .= (/%([0-9][0-9A-Z])/) ? 
-					pack('c',hex($1)) : $_;
-			}
+			$html_post_attributes = &html_unhex($_);
 			%args = ('_junk_', split(/\n([^=]+)=/, $html_post_attributes));
 			delete $args{'_junk_'};
 			for (keys %args) {
@@ -225,6 +238,22 @@ sub process_html_request {
 	}
 }
 
+
+#
+# Translate %HEX codes
+#
+sub html_unhex {
+	local($src) = @_;
+	local($dst);
+
+	$dst = '';
+	$* = 1;
+	for (split(/(%[0-9][0-9A-Z])/, $src)) {
+		$dst .= (/%([0-9][0-9A-Z])/) ? 
+			pack('c',hex($1)) : $_;
+	}
+	return $dst;
+}
 
 #
 # Map IP to string.

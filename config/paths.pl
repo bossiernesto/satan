@@ -1,3 +1,6 @@
+$LS="/bin/ls";
+$PS="/bin/ps";
+$NETSTAT="/usr/ucb/netstat";
 $FINGER="/usr/ucb/finger";
 $FTP="/usr/ucb/ftp";
 $RPCINFO="/usr/etc/rpcinfo";
@@ -5,9 +8,9 @@ $RUSERS="/usr/ucb/rusers";
 $SHOWMOUNT="/usr/etc/showmount";
 $YPWHICH="/bin/ypwhich";
 $NSLOOKUP="/usr/etc/nslookup";
-$XHOST="/usr/bin/X11/xhost";
+$XHOST="/usr/X11R6/bin/xhost";
 $PING="/usr/etc/ping";
-$MOSAIC="/usr/exp/bin/netscape";
+$MOSAIC="/usr/local/bin/netscape";
 
 $TCP_SCAN="bin/tcp_scan";
 $UDP_SCAN="bin/udp_scan";

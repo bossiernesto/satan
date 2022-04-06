@@ -12,7 +12,7 @@ print CLIENT <<EOF;
 <LINK REV="made" HREF="mailto:satan\@fish.com">
 </HEAD>
 <BODY>
-<H1><IMG SRC=$HTML_ROOT/images/satan.gif> Vulnerabilities - By Type</H1>
+<H1><IMG SRC="$HTML_ROOT/images/satan.gif"> Vulnerabilities - By Type</H1>
 <hr>
 <h3>Number of hosts per vulnerability type.</h3>
 EOF
@@ -28,7 +28,7 @@ EOF
 
 	print CLIENT <<EOF;
 	<li> 
-	<a href="satan_severity_hosts.pl,$_type,">
+	<a href="satan_severity_hosts.pl,$_type.html">
 	$_ - $severity_type_count{$_} host(s)</a>
 EOF
     }
@@ -43,8 +43,8 @@ EOF
 }
 
 print CLIENT <<EOF
-<hr> <a href=$HTML_STARTPAGE> Back to the SATAN start page </a> |
-<a href=analysis.pl> Back to SATAN Reporting and Analysis </a>
+<hr> <a href="$HTML_STARTPAGE"> Back to the SATAN start page </a> |
+<a href="analysis.pl.html"> Back to SATAN Reporting and Analysis </a>
 </BODY>
 </HTML>
 EOF
